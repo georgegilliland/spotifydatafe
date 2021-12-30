@@ -1,15 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import reportWebVitals from './reportWebVitals';
 import { SnackbarProvider } from 'notistack';
+import './index.css';
+
+const client = new ApolloClient({
+  uri: "https://thejabronispotifydatapipeline.herokuapp.com/api/",
+  cache: new InMemoryCache()
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-      <App />
-    </SnackbarProvider>
+      <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+        <ApolloProvider client={client}>
+        <App />
+        </ApolloProvider>
+      </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

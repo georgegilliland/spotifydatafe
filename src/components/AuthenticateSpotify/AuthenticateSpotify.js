@@ -1,36 +1,48 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-
+import { useMutation, gql } from "@apollo/client";
 import { processData, handleLogin } from "./utils/utils";
 import { useSnackbar } from 'notistack';
 import "./AuthenticateSpotify.css";
 
-;export const AuthenticateSpotify = () => { 
-  const [storageAccessTokenLoaded, setStorageAccessTokenLoaded] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
+const ADD_ARTIST = gql`
+  mutation createArtist($name: String!, $id: String!, $link: String!, $genres: [String]!, $image: ImageInput!) {
+    createArtist(input: {name: $name, id: $id, link: $link, genres: $genres, image: $image}) {
+      id
+    }
+  }
+`;
 
+export const AuthenticateSpotify = () => { 
+  const [storageAccessTokenLoaded, setStorageAccessTokenLoaded] = useState(false);
+  const [stateData, setStateData] = useState(null);
+  const [createArtist] = useMutation(ADD_ARTIST);
+  const { enqueueSnackbar } = useSnackbar();
+  
   const makeSpotifyRequest = async (token) => {
     try {
-      const { data } = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=short_term", {
+      const { data } = await axios.get("https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=50", {
         headers: {
-          "Authorization": `Bearer ${token}a`,
+          "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       });
-      console.log(processData(data.items))
+      const processedData = processData(data.items);
+      setStateData(processedData);
       localStorage.setItem('accessTokenSpotify', null);
-      enqueueSnackbar('Success', { 
+      enqueueSnackbar('Successfully retrieved data', { 
         variant: 'success',
       });
+
+      return data.items;
 
     } catch (e) {
       enqueueSnackbar('Error', { 
         variant: 'error' 
       });
     }
-}
+  }
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessTokenSpotify')
@@ -46,6 +58,36 @@ import "./AuthenticateSpotify.css";
     }
 
   }, [storageAccessTokenLoaded]);
+
+  useEffect(() => {
+    if (stateData) {
+      try {
+      stateData.forEach(async d => {
+        await createArtist({
+          variables: {
+            name: d.name,
+            id: d.id,
+            link: d.link,
+            genres: d.genres,
+            image: {
+              height: d.image.height,
+              width: d.image.width,
+              link: d.image.url
+            }
+          }
+        });
+      });
+      enqueueSnackbar('Successfully sent data to db', { 
+        variant: 'success',
+      });
+    } catch (e) {
+      enqueueSnackbar('Error sending data to db', { 
+        variant: 'error',
+      });
+      }
+    }
+
+  }, [stateData]);
 
   return (
     <>
