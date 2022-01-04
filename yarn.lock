@@ -11,7 +11,7 @@
     "jsonpointer" "^5.0.0"
     "leven" "^3.1.0"
 
-"@apollo/client@^3.5.6":
+"@apollo/client@^3.5.6", "@apollo/client@latest":
   "integrity" "sha512-XHoouuEJ4L37mtfftcHHO1caCRrKKAofAwqRoq28UQIPMJk+e7n3X9OtRRNXKk/9tmhNkwelSary+EilfPwI7A=="
   "resolved" "https://registry.npmjs.org/@apollo/client/-/client-3.5.6.tgz"
   "version" "3.5.6"
@@ -28,6 +28,13 @@
     "ts-invariant" "^0.9.4"
     "tslib" "^2.3.0"
     "zen-observable-ts" "^1.2.0"
+
+"@apollo/react-testing@^4.0.0":
+  "integrity" "sha512-P7Z/flUHpRRZYc3FkIqxZH9XD3FuP2Sgks1IXqGq2Zb7qI0aaTfVeRsLYmZNUcFOh2pTHxs0NXgPnH1VfYOpig=="
+  "resolved" "https://registry.npmjs.org/@apollo/react-testing/-/react-testing-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "@apollo/client" "latest"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.8.3":
   "integrity" "sha512-IF4EOMEV+bfYwOmNxGzSnjR2EmQod7f1UXOpZM3l4i4o4QNwzjtJAu/HxdjHq0aYBvdqMuQEY1eg0nqW9ZPORA=="
