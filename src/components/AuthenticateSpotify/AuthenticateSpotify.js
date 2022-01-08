@@ -7,8 +7,8 @@ import { useSnackbar } from 'notistack';
 import "./AuthenticateSpotify.css";
 
 const ADD_ARTIST = gql`
-  mutation createArtist($name: String!, $id: String!, $link: String!, $genres: [String]!, $image: ImageInput!) {
-    createArtist(input: {name: $name, id: $id, link: $link, genres: $genres, image: $image}) {
+  mutation upsertArtist($name: String!, $id: String!, $link: String!, $genres: [String]!, $image: ImageInput!) {
+    upsertArtist(input: {name: $name, id: $id, link: $link, genres: $genres, image: $image}) {
       id
     }
   }
@@ -17,7 +17,7 @@ const ADD_ARTIST = gql`
 export const AuthenticateSpotify = () => { 
   const [storageAccessTokenLoaded, setStorageAccessTokenLoaded] = useState(false);
   const [stateData, setStateData] = useState(null);
-  const [createArtist] = useMutation(ADD_ARTIST);
+  const [upsertArtist] = useMutation(ADD_ARTIST);
   const { enqueueSnackbar } = useSnackbar();
   
   const makeSpotifyRequest = async (token) => {
@@ -63,7 +63,7 @@ export const AuthenticateSpotify = () => {
     if (stateData) {
       try {
       stateData.forEach(async d => {
-        await createArtist({
+        await upsertArtist({
           variables: {
             name: d.name,
             id: d.id,
