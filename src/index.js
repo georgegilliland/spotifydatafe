@@ -7,8 +7,11 @@ import { SnackbarProvider } from 'notistack';
 import './index.css';
 
 const client = new ApolloClient({
-  uri: "https://thejabronispotifydatapipeline.herokuapp.com/api/",
-  cache: new InMemoryCache()
+  uri: "http://localhost:4000/api",
+  cache: new InMemoryCache(),
+  headers: {
+    'Authorization': "123546"
+  }
 });
 
 ReactDOM.render(
