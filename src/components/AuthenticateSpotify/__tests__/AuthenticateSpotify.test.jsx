@@ -19,6 +19,6 @@ test('renders component', async () => {
             <AuthenticateSpotify />
         </MockedProvider>
     )
-    const button = screen.getByText(/Get your data/i);
+    const button = screen.getByText(/Authenticate/i);
     expect(button).toBeInTheDocument();
 });

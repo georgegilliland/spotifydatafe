@@ -1,3 +1,4 @@
+import React from 'react';
 import { AuthenticateSpotify } from './components/AuthenticateSpotify/AuthenticateSpotify';
 import './App.css';
 

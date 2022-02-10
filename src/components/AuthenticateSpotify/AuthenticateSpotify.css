@@ -1,13 +1,13 @@
 .formContainer {
-    width: 250px;
+  width: 250px;
 }
 
 button {
-    width: 100%;
-    text-transform: unset !important;
-
+  width: 100%;
+  text-transform: unset !important;
 }
 
-.MuiFormControl-root, .MuiButtonBase-root {
-    padding: 15px 0 !important;
+.MuiFormControl-root,
+.MuiButtonBase-root {
+  padding: 15px 0 !important;
 }
