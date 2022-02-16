@@ -1,8 +1,8 @@
-import path from "path";
+const path = require("path");
 
-const config = {
+module.exports = {
   entry: "./src/index.tsx",
-  mode: 'development',
+  mode: 'production',
   module: {
     rules: [
       {
@@ -43,6 +43,4 @@ const config = {
     port: 3000,
   },
 };
-
-export default config;
 
